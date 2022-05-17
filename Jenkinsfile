@@ -38,6 +38,12 @@ node () {
 			} 
  		} 
 	}
+	stage('Quality check') {
+		withSonarQubeEnv('Sonar') {
+		bat "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Tyler_Test1"
+		}
+	} 
+	
 	stage ('Tyler Test - Post build actions') {
 /*
 Please note this is a direct conversion of post-build actions. 
