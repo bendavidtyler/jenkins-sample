@@ -1,53 +1,51 @@
+// Powered by Infostretch 
+
 timestamps {
 
 node () {
 
-	stage ('App-IC - Checkout') {
- 	 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git-login', url: 'https://github.com/bnasslahsen/jenkins-sample.git']]]) 
+	stage ('Tyler Test - Checkout') {
+ 	 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git-login', url: 'https://github.com/bendavidtyler/jenkins-sample']]]) 
 	}
-	
-	stage ('App-IC - Clean') {
-	withMaven(maven: 'maven') { 
+	stage ('Tyler Test - Build') {
+ 			// Maven build step
+	withMaven(maven: 'Maven') { 
  			if(isUnix()) {
- 				sh "mvn clean" 
+ 				sh "mvn clean " 
 			} else { 
- 				bat "mvn clean" 
+ 				bat "mvn clean " 
 			} 
- 		}		
-	}
-	
-	stage ('App-IC - Compile') {
-	withMaven(maven: 'maven') { 
+ 		}		// Maven build step
+	withMaven(maven: 'Maven') { 
  			if(isUnix()) {
- 				sh "mvn compile" 
+ 				sh "mvn compile " 
 			} else { 
- 				bat "mvn compile" 
+ 				bat "mvn compile " 
 			} 
- 		}		
-	}
-	
-	stage ('App-IC - Tests') {
-	withMaven(maven: 'maven') { 
+ 		}		// Maven build step
+	withMaven(maven: 'Maven') { 
  			if(isUnix()) {
- 				sh "mvn test" 
+ 				sh "mvn test " 
 			} else { 
- 				bat "mvn test" 
+ 				bat "mvn test " 
 			} 
- 		}		
-	}
-	
-	stage ('App-IC - Package') {
-	withMaven(maven: 'maven') { 
+ 		}		// Maven build step
+	withMaven(maven: 'Maven') { 
  			if(isUnix()) {
- 				sh "mvn package -DskipTests" 
+ 				sh "mvn package -DskipTests " 
 			} else { 
- 				bat "mvn package -DskipTests" 
+ 				bat "mvn package -DskipTests " 
 			} 
- 		}		
+ 		} 
 	}
-	
-	stage ('App-IC - Post build actions') {
-		step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'badr.nasslahsen@gmail.com', sendToIndividuals: false])
+	stage ('Tyler Test - Post build actions') {
+/*
+Please note this is a direct conversion of post-build actions. 
+It may not necessarily work/behave in the same way as post-build actions work.
+A logic review is suggested.
+*/
+		// Mailer notification
+		step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'ben.tyler@st.com', sendToIndividuals: false])
  
 	}
 }
